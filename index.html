@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>The Gathering Place — Kitchen & Community</title>
+    <meta
+      name="description"
+      content="Slow-food community kitchen: pre-order meals, workshops, and farm dinners near Kilukka Farms."
+    />
+    <style>
+      :root {
+        --bg: #f7f6f3;
+        --card: #ffffff;
+        --muted: #666;
+        --accent: #2f7a4f;
+        --accent-2: #6fb37e;
+        --radius: 14px;
+        --shadow: 0 6px 18px rgba(16, 24, 32, 0.08);
+        --maxw: 1100px;
+        font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto,
+          'Helvetica Neue', Arial;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: #0b0b0b;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 24px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .nav-toggle {
+        display: none;
+        border: 0;
+        background: transparent;
+        padding: 6px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .nav-toggle svg {
+        width: 20px;
+        height: 20px;
+        color: inherit;
+      }
+      #nav-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 11, 11, 0.35);
+        display: none;
+        z-index: 50;
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 700;
+      }
+      nav a {
+        margin-left: 20px;
+        color: inherit;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+      }
+      nav a:hover {
+        color: var(--accent);
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 80px;
+      }
+      .hero-inner {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0.8)
+        );
+        padding: 48px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+      }
+      .eyebrow {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      h1 {
+        font-size: 2.5rem;
+        margin: 16px 0 20px;
+        line-height: 1.2;
+      }
+      h2 {
+        font-size: 2rem;
+        margin: 0 0 24px;
+        line-height: 1.3;
+      }
+      h3 {
+        font-size: 1.4rem;
+        margin: 0 0 16px;
+      }
+      p.lead {
+        color: var(--muted);
+        max-width: 60ch;
+        font-size: 1.1rem;
+        margin: 0 0 32px;
+      }
+      .hero-ctas {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 12px 24px;
+        border-radius: 10px;
+        border: 0;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 0.95rem;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #256338;
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .btn-ghost:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .image-card {
+        border-radius: 20px;
+        overflow: hidden;
+        height: 320px;
+        background: #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 80px;
+      }
+      .card {
+        background: var(--card);
+        padding: 40px;
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+      }
+      .menu-grid {
+        display: flex;
+        gap: 32px;
+        margin-top: 40px;
+        overflow-x: auto;
+        padding: 4px 4px 24px;
+        scroll-padding: 24px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+      }
+      .menu-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .menu-item {
+        display: flex;
+        flex-direction: column;
+        background: var(--card);
+        border-radius: 14px;
+        overflow: hidden;
+        min-width: 300px;
+        width: 300px;
+        scroll-snap-align: start;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+      }
+      .menu-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .menu-thumb {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        background: #eee;
+      }
+      .menu-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .menu-item:hover .menu-thumb img {
+        transform: scale(1.05);
+      }
+      .menu-info {
+        padding: 24px;
+      }
+      .menu-info h3 {
+        margin: 0 0 8px;
+        font-size: 1.4rem;
+        color: #1a1a1a;
+        line-height: 1.3;
+      }
+      .menu-info .muted {
+        line-height: 1.5;
+      }
+      .events {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 40px;
+      }
+      .event-card {
+        background: var(--card);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .event-image {
+        height: 200px;
+        overflow: hidden;
+      }
+      .event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .event-content {
+        padding: 24px;
+      }
+      footer {
+        margin-top: 80px;
+        padding: 48px 40px;
+        color: #fff;
+        background: #0b0b0b;
+        border-radius: 12px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .small {
+        font-size: 0.85rem;
+      }
+      .caps {
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      .spaced {
+        margin-top: 24px;
+      }
+      .center {
+        text-align: center;
+      }
+      .sr-only {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      section {
+        margin-bottom: 80px;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      ul li {
+        margin-bottom: 12px;
+      }
+      label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 8px;
+        display: block;
+      }
+      input[type='text'],
+      input[type='email'],
+      input[type='tel'],
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #e6e6e6;
+        font-size: 0.95rem;
+        font-family: inherit;
+        margin-bottom: 20px;
+      }
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      .contact-info {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin: 32px 0;
+      }
+      .contact-item strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      @media (min-width: 720px) {
+        .container {
+          padding: 48px;
+        }
+        header {
+          margin-bottom: 64px;
+        }
+        .hero {
+          grid-template-columns: 1fr 480px;
+          margin-bottom: 120px;
+        }
+        .hero-inner {
+          padding: 56px;
+        }
+        h1 {
+          font-size: 3rem;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr 400px;
+          margin-bottom: 120px;
+        }
+        .menu-grid {
+          gap: 40px;
+          padding: 4px 4px 32px;
+        }
+        .menu-item {
+          min-width: 340px;
+          width: 340px;
+        }
+        .events {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+        .contact-info {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 719px) {
+        header {
+          flex-direction: row;
+          align-items: center;
+          position: relative;
+        }
+        .nav-toggle {
+          display: inline-grid;
+          margin-left: auto;
+        }
+        nav {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: var(--card);
+          padding: 84px 24px 24px;
+          box-shadow: 0 12px 30px rgba(2, 8, 23, 0.18);
+          z-index: 60;
+        }
+        header.open nav {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        nav a {
+          margin: 0;
+          padding: 16px 12px;
+          border-radius: 8px;
+          background: transparent;
+          font-size: 1.05rem;
+        }
+        nav a:active {
+          background: rgba(0, 0, 0, 0.03);
+        }
+        body.menu-open {
+          overflow: hidden;
+        }
+      }
+
+      @media (min-width: 1100px) {
+        .container {
+          padding: 64px 80px;
+        }
+        h1 {
+          font-size: 3.5rem;
+        }
+        h2 {
+          font-size: 2.5rem;
+        }
+        .menu-grid {
+          gap: 48px;
+          padding: 4px 4px 40px;
+        }
+        .menu-item {
+          min-width: 380px;
+          width: 380px;
+        }
+        .card {
+          padding: 48px;
+        }
+        section {
+          margin-bottom: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="page">
+      <header>
+        <div class="brand">
+          <div class="logo" aria-hidden="true">GP</div>
+          <div>
+            <div style="font-weight: 800">The Gathering Place</div>
+            <div style="font-size: 0.9rem; color: var(--muted)">
+              Kitchen · Community · Slow Food
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="main-nav"
+          aria-expanded="false"
+          aria-label="Toggle menu"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <nav id="main-nav" aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#menu">Menu</a>
+          <a href="#events">Events</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <div id="nav-backdrop" aria-hidden="true"></div>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-heading">
+          <div class="hero-inner card">
+            <div class="eyebrow">Farm kitchen in the hills</div>
+            <h1 id="hero-heading">Food that remembers the soil.</h1>
+            <p class="lead">
+              A slow-food community table where seasonal produce, honest cooking
+              and messy, human conversation meet. We run pre-order meals,
+              workshops, and small dinner pop-ups — local ingredients, modular
+              menus, zero waste intent.
+            </p>
+            <div class="hero-ctas">
+              <a href="tel:+919XXXXXXXXX" class="btn btn-primary"
+                >Pre-order Now</a
+              >
+              <button class="btn btn-ghost" id="see-events">
+                Upcoming events
+              </button>
+            </div>
+            <div class="muted small spaced">
+              Strict pre-order policy. We hate waste more than paperwork.
+            </div>
+          </div>
+
+          <div class="image-card" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80"
+              alt="Farm kitchen table with food"
+              loading="lazy"
+            />
+          </div>
+        </section>
+
+        <section id="about" class="grid-2" aria-labelledby="about-heading">
+          <div class="card">
+            <h2 id="about-heading">What we are</h2>
+            <p class="muted spaced">
+              The Gathering Place is a community kitchen and micro-event space
+              focused on regenerative food practices, seasonal menus, and
+              low-waste operations. Local produce, patient cooking, and
+              better-than-expected conversations over a shared table.
+            </p>
+            <ul class="spaced muted">
+              <li>Pre-order meals — so we don't cook for ghosts</li>
+              <li>
+                Workshops: fermentation, preserving, traditional techniques
+              </li>
+              <li>Sustainable packaging and on-site composting</li>
+            </ul>
+          </div>
+
+          <aside class="card" aria-labelledby="quick-facts">
+            <h3 id="quick-facts">Quick facts</h3>
+            <p class="muted small spaced">
+              Open for pickups and small dinners. Located near Kilukka Farms
+              (Shoolagiri / Krishnagiri). Exact location shared after booking.
+            </p>
+            <div style="margin-top: 20px" class="image-card">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80"
+                alt="Harvest of cassava and produce"
+                loading="lazy"
+              />
+            </div>
+          </aside>
+        </section>
+
+        <section id="menu" aria-labelledby="menu-heading">
+          <h2 id="menu-heading">What we make</h2>
+          <p class="muted">
+            A taste of our kitchen — rotating seasonal menu. All meals are
+            pre-order only.
+          </p>
+
+          <div class="menu-grid" id="menu-grid"></div>
+        </section>
+
+        <section id="events" aria-labelledby="events-heading">
+          <h2 id="events-heading">Events & Workshops</h2>
+          <div class="events" id="events-grid"></div>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-heading">
+          <div class="card">
+            <h2 id="contact-heading">Contact Us</h2>
+
+            <div class="contact-info"></div>
+
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              aria-label="Contact form"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p style="display: none">
+                <label
+                  >Don't fill this out if you're human: <input name="bot-field"
+                /></label>
+              </p>
+
+              <label for="cname">Your name</label>
+              <input
+                id="cname"
+                name="name"
+                type="text"
+                placeholder="Name"
+                required
+              />
+
+              <label for="cemail">Email</label>
+              <input
+                id="cemail"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+              />
+
+              <label for="cmessage">Message</label>
+              <textarea
+                id="cmessage"
+                name="message"
+                rows="4"
+                placeholder="How can we help?"
+                required
+              ></textarea>
+
+              <button class="btn btn-primary" type="submit">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <footer>
+          <div class="footer-grid">
+            <div>
+              <strong>The Gathering Place</strong>
+              <div class="muted small spaced">Slow food, faster smiles.</div>
+            </div>
+            <div>
+              <div style="font-weight: 700">Location</div>
+              <div class="muted small spaced">
+                Plot No.4, Sanctity Ferme, Simbalthiradi (V&P), Shoolagiri,
+                Krishnagiri Dist, Tamil Nadu - 635117
+              </div>
+            </div>
+            <div>
+              <div style="font-weight: 700">Subscribe</div>
+              <form
+                name="newsletter"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field-2"
+                class="spaced"
+              >
+                <input type="hidden" name="form-name" value="newsletter" />
+                <p style="display: none">
+                  <label
+                    >Don't fill this out: <input name="bot-field-2"
+                  /></label>
+                </p>
+                <label for="sub-email" class="sr-only">Email</label>
+                <input
+                  id="sub-email"
+                  name="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                />
+                <div style="margin-top: 12px">
+                  <button class="btn btn-ghost" type="submit">Subscribe</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="center muted small">
+            © <span id="year"></span> The Gathering Place — built with care (and
+            a little stubbornness).
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      const MENU = [
+        {
+          id: 'puttu-combo',
+          name: 'Puttu Combo',
+          price: '₹120',
+          desc: 'Puttu, Kadala Curry, Pazham, Pappadam, Tea',
+          img: 'https://images.unsplash.com/photo-1630409351241-e90e7f5e434d?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'veg-meal',
+          name: 'Veg Meal',
+          price: '₹220',
+          desc: 'Red Rice, Veg Thoran, Pulses Thoran, Moru Curry',
+          img: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'podium-kozhiyum',
+          name: 'Pidi & Chicken',
+          price: '₹150',
+          desc: 'Pidi, Chicken Curry, Black Tea',
+          img: 'https://images.unsplash.com/photo-1638761938353-2f0a0132d806?auto=format&fit=crop&w=800&q=80',
+        },
+      ];
+
+      const EVENTS = [
+        {
+          date: 'Nov 8, 2025',
+          title: 'Kappa Harvest Potluck',
+          note: 'Bring a recipe — we cook & rank the best.',
+          img: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1200&q=60',
+        },
+        {
+          date: 'Dec 6, 2025',
+          title: 'Slow Food Dinner',
+          note: 'Farm-to-table 7-course tasting.',
+          img: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=60',
+        },
+      ];
+
+      const menuGrid = document.getElementById('menu-grid');
+      const eventsGrid = document.getElementById('events-grid');
+      const yearSpan = document.getElementById('year');
+
+      function renderMenu() {
+        menuGrid.innerHTML = '';
+        MENU.forEach((item) => {
+          const card = document.createElement('div');
+          card.className = 'card menu-item';
+          card.innerHTML = `
+            <div class="menu-thumb">
+              <img src="${item.img}" alt="${item.name}" loading="lazy">
+            </div>
+            <div class="menu-info">
+              <h3>${item.name}</h3>
+              <div class="muted">${item.desc}</div>
+            </div>
+          `;
+          menuGrid.appendChild(card);
+        });
+      }
+
+      function renderEvents() {
+        eventsGrid.innerHTML = '';
+        EVENTS.forEach((ev) => {
+          const card = document.createElement('div');
+          card.className = 'event-card';
+          card.innerHTML = `
+            <div class="event-image">
+              <img src="${ev.img}" alt="${ev.title}" loading="lazy">
+            </div>
+            <div class="event-content">
+              <div class="caps">${ev.date}</div>
+              <h3>${ev.title}</h3>
+              <p class="muted small">${ev.note}</p>
+            </div>
+          `;
+          eventsGrid.appendChild(card);
+        });
+      }
+
+      document.getElementById('see-events').addEventListener('click', (e) => {
+        e.preventDefault();
+        closeMobileMenuIfOpen();
+        const el = document.getElementById('events');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      const navToggle = document.querySelector('.nav-toggle');
+      const headerEl = document.querySelector('header');
+      const navBackdrop = document.getElementById('nav-backdrop');
+
+      function closeMobileMenu() {
+        if (!headerEl) return;
+        headerEl.classList.remove('open');
+        if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+        if (navBackdrop) navBackdrop.style.display = 'none';
+      }
+
+      function closeMobileMenuIfOpen() {
+        if (document.body.classList.contains('menu-open')) {
+          closeMobileMenu();
+        }
+      }
+
+      if (navBackdrop) {
+        navBackdrop.addEventListener('click', closeMobileMenu);
+      }
+
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          const open = headerEl.classList.toggle('open');
+          navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          document.body.classList.toggle('menu-open', open);
+          if (navBackdrop) navBackdrop.style.display = open ? 'block' : 'none';
+        });
+
+        const mainNav = document.getElementById('main-nav');
+        if (mainNav) {
+          mainNav.addEventListener('click', (e) => {
+            if (e.target && e.target.tagName === 'A') {
+              closeMobileMenu();
+            }
+          });
+        }
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (
+          e.key === 'Escape' &&
+          document.body.classList.contains('menu-open')
+        ) {
+          closeMobileMenu();
+        }
+      });
+
+      renderMenu();
+      renderEvents();
+      yearSpan.textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
