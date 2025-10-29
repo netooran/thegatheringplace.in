@@ -254,22 +254,22 @@
         gap: 32px;
         margin-top: 40px;
       }
-      .event-card {
+      .list-card {
         background: var(--card);
         border-radius: 14px;
         overflow: hidden;
         box-shadow: var(--shadow);
       }
-      .event-image {
+      .list-card-image {
         height: 200px;
         overflow: hidden;
       }
-      .event-image img {
+      .list-card-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-      .event-content {
+      .list-card-content {
         padding: 24px;
       }
       footer {
@@ -732,7 +732,7 @@
           desc: 'Puttu, Kadala Curry, Pazham, Pappadam, Tea',
           img: 'https://images.unsplash.com/photo-1630409351241-e90e7f5e434d?auto=format&fit=crop&w=800&q=80',
         },
-        
+
         {
           id: 'pidium-kozhiyum',
           name: 'Pidi & Chicken Combo',
@@ -772,12 +772,12 @@
         menuGrid.innerHTML = '';
         MENU.forEach((item) => {
           const card = document.createElement('div');
-          card.className = 'card menu-item';
+          card.className = 'list-card menu-item';
           card.innerHTML = `
-            <div class="menu-thumb">
+            <div class="list-card-image">
               <img src="${item.img}" alt="${item.name}" loading="lazy">
             </div>
-            <div class="menu-info">
+            <div class="list-card-content">
               <h3>${item.name}</h3>
               <div class="muted">${item.desc}</div>
             </div>
@@ -790,12 +790,12 @@
         eventsGrid.innerHTML = '';
         EVENTS.forEach((ev) => {
           const card = document.createElement('div');
-          card.className = 'event-card';
+          card.className = 'list-card';
           card.innerHTML = `
-            <div class="event-image">
+            <div class="list-card-image">
               <img src="${ev.img}" alt="${ev.title}" loading="lazy">
             </div>
-            <div class="event-content">
+            <div class="list-card-content">
               <div class="caps">${ev.date}</div>
               <h3>${ev.title}</h3>
               <p class="muted small">${ev.note}</p>
