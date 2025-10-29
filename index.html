@@ -544,25 +544,39 @@
           <div class="card">
             <h2 id="about-heading">What we are</h2>
             <p class="muted spaced">
-              The Gathering Place is a community kitchen and micro-event space
-              focused on regenerative food practices, seasonal menus, and
-              low-waste operations. Local produce, patient cooking, and
-              better-than-expected conversations over a shared table.
+              The Gathering Place is a farm-to-table community kitchen where
+              food, sustainability, and human connection intertwine. We design
+              our menus around what's growing in our farm plots and what's
+              available from our network of local farmers, ensuring peak
+              freshness and minimal food miles.
             </p>
             <ul class="spaced muted">
-              <li>Pre-order meals — so we don't cook for ghosts</li>
               <li>
-                Workshops: fermentation, preserving, traditional techniques
+                Community-powered: Local volunteers and food enthusiasts help
+                tend our gardens and kitchen
               </li>
-              <li>Sustainable packaging and on-site composting</li>
+              <li>
+                Zero-waste commitment: On-site composting, thoughtfully
+                portioned pre-orders, and mindful menu design
+              </li>
+              <li>
+                Living traditions: Workshops on fermentation, preserving, and
+                indigenous cooking techniques
+              </li>
+              <li>
+                Conscious cooking: Menus that respect seasonal rhythms and
+                support local food systems
+              </li>
             </ul>
           </div>
 
           <aside class="card" aria-labelledby="quick-facts">
             <h3 id="quick-facts">Quick facts</h3>
             <p class="muted small spaced">
-              Open for pickups and small dinners. Located near Kilukka Farms
-              (Shoolagiri / Krishnagiri). Exact location shared after booking.
+              Most of our ingredients come straight from our own farm plots or
+              are sourced from small-scale farmers nearby. Located inside
+              Kilukka Farms, Sanctity Ferme (Shoolagiri / Krishnagiri), just 1.5
+              hours from Bangalore. Open for pickups and intimate dinners.
             </p>
             <div style="margin-top: 20px" class="image-card">
               <img
@@ -665,6 +679,7 @@
                 data-netlify="true"
                 netlify-honeypot="bot-field-2"
                 class="spaced"
+                netlify
               >
                 <input type="hidden" name="form-name" value="newsletter" />
                 <p style="display: none">
@@ -697,24 +712,39 @@
     <script>
       const MENU = [
         {
+          id: 'veg-buffet',
+          name: 'Grand Veg Buffet',
+          price: '₹220',
+          desc: 'Steamed white rice with assorted veg curries, thorans, fry, chammanthi, pickle, curd, pappadam, salad, and a pudding/payasam dessert.',
+          img: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'non-veg-buffet',
+          name: 'Grand Non-veg Buffet',
+          price: '₹220',
+          desc: 'White rice with chicken curry or chicken fry, traditional veg sides, thoran, chammanthi, pickle, curd, pappadam, salad, and dessert.',
+          img: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80',
+        },
+        {
           id: 'puttu-combo',
-          name: 'Puttu Combo',
+          name: 'Puttu Veg Combo',
           price: '₹120',
           desc: 'Puttu, Kadala Curry, Pazham, Pappadam, Tea',
           img: 'https://images.unsplash.com/photo-1630409351241-e90e7f5e434d?auto=format&fit=crop&w=800&q=80',
         },
+        
         {
-          id: 'veg-meal',
-          name: 'Veg Meal',
-          price: '₹220',
-          desc: 'Red Rice, Veg Thoran, Pulses Thoran, Moru Curry',
-          img: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80',
-        },
-        {
-          id: 'podium-kozhiyum',
-          name: 'Pidi & Chicken',
+          id: 'pidium-kozhiyum',
+          name: 'Pidi & Chicken Combo',
           price: '₹150',
           desc: 'Pidi, Chicken Curry, Black Tea',
+          img: 'https://images.unsplash.com/photo-1638761938353-2f0a0132d806?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'appam-chicken',
+          name: 'Appam & Chicken Stew Combo',
+          price: '₹150',
+          desc: 'Appam, Chicken Stew, Tea',
           img: 'https://images.unsplash.com/photo-1638761938353-2f0a0132d806?auto=format&fit=crop&w=800&q=80',
         },
       ];
